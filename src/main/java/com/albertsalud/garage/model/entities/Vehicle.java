@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -19,6 +20,8 @@ public class Vehicle {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vehicle_seq")
 	private Long id;
 	
+	@ManyToOne
+	private User owner;
 	private VehicleType type;
 	private String identificationNumber;
 

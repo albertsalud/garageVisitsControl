@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.albertsalud.garage.model.dao.VehicleDAO;
+import com.albertsalud.garage.model.entities.User;
 import com.albertsalud.garage.model.entities.Vehicle;
 
 @Service
@@ -18,8 +19,12 @@ public class VehicleServices {
 		return vehicleDao.save(vehicle);
 	}
 
-	public List<Vehicle> getVehicles() {
-		return vehicleDao.findAll();
+	public List<Vehicle> getVehicles(User user) {
+		return vehicleDao.findByOwner(user);
+	}
+
+	public Vehicle getVehicle(User user, Long vehicleId) {
+		return vehicleDao.findByOwnerAndId(user, vehicleId).orElse(null);
 	}
 
 }

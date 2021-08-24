@@ -2,16 +2,19 @@ package com.albertsalud.garage.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.albertsalud.garage.controllers.dto.VehicleFormDTO;
 import com.albertsalud.garage.model.entities.Vehicle;
 import com.albertsalud.garage.model.services.VehicleServices;
+import com.albertsalud.garage.security.UserPrincipal;
 
 @Controller
 @RequestMapping("/vehicles")
@@ -24,7 +27,7 @@ public class VehicleController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("/new")
-	public String getVehicle(Model model) {
+	public String getNewVehicle(Model model) {
 		return getVehicleForm(model, new VehicleFormDTO());
 		
 	}
@@ -36,16 +39,36 @@ public class VehicleController {
 	
 	@PostMapping("/save")
 	public String saveVehicle(@ModelAttribute VehicleFormDTO dto, 
+			@AuthenticationPrincipal UserPrincipal user,
 			Model model) {
+		
 		Vehicle vehicle = modelMapper.map(dto, Vehicle.class);
+		vehicle.setOwner(user.getUser());
+		
 		vehicleServices.save(vehicle);
-		return getVehicles(model);
+		return getVehicles(model, user);
 	}
 	
 	@GetMapping(value = {"", "/"})
-	public String getVehicles(Model model) {
-		model.addAttribute("vehicles", vehicleServices.getVehicles());
+	public String getVehicles(Model model,
+			@AuthenticationPrincipal UserPrincipal user) {
+		model.addAttribute("vehicles", vehicleServices.getVehicles(user.getUser()));
 		return "vehicleList";
+	}
+	
+	@GetMapping("{vehicleId}")
+	public String getVehicle(Model model,
+			@AuthenticationPrincipal UserPrincipal user,
+			@PathVariable Long vehicleId) {
+		Vehicle requestedVehicle = vehicleServices.getVehicle(user.getUser(), vehicleId);
+		if(requestedVehicle == null) {
+			model.addAttribute("message", "Vehicle ID not found!");
+			return this.getNewVehicle(model);
+		}
+		
+		VehicleFormDTO dto = modelMapper.map(requestedVehicle, VehicleFormDTO.class);
+		
+		return getVehicleForm(model, dto);
 	}
 
 }

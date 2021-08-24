@@ -8,16 +8,18 @@
 <title>Vehicle list</title>
 </head>
 <body>
-	<h1>Vehicles</h1>
+	<h1>Vehicles list</h1>
 	<table>
 		<tr>
 			<th>Vehicle type</th>
 			<th>Id. Number</th>
+			<th>&nbsp;</th>
 		</tr>
 		<c:forEach items="${vehicles}" var="curVehicle">
 			<tr>
 				<td>${curVehicle.type.description}</td>
 				<td>${curVehicle.identificationNumber}</td>
+				<td><a href="<c:url value="/vehicles/${curVehicle.id}" />" >&gt; modify</a></td>
 			</tr>
 		</c:forEach>
 	</table>

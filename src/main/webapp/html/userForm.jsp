@@ -6,24 +6,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Vehicle form</title>
+<title>User form</title>
 </head>
 <body>
-	<h1>Vehicle form</h1>
-	<p>
-		<a href="<c:url value="/vehicles" />">&lt; back to vehicles list</a>
-	</p>
-	<c:url value="/vehicles/save" var="formURL" />
-	<form:form modelAttribute="vehicleFormDTO" action="${formURL}" method="post">
+	<h1>User form</h1>
+	<c:url value="/users/save" var="formURL" />
+	<form:form modelAttribute="userFormDTO" action="${formURL}" method="post">
 		<form:hidden path="id" />
 		<p>
-			Vehicle type:
-			<form:select path="type" items="${vehicleFormDTO.types}">
-			</form:select>
+			Name:
+			<form:input path="name" />
 		</p>
 		<p>
-			Identification number:
-			<form:input path="identificationNumber" />
+			Surname:
+			<form:input path="surname" />
+		</p>
+		<p>
+			Email:
+			<form:input path="email" />
+		</p>
+		<p>
+			Password:
+			<form:input path="password" />
+		</p>
+		<p>
+			Repeat password:
+			<form:input path="repeatPassword" />
 		</p>
 		<p>
 			<input type="submit" value="Save" />
