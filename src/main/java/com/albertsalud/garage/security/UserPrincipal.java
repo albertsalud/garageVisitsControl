@@ -16,7 +16,7 @@ public class UserPrincipal implements UserDetails{
 	private static final long serialVersionUID = -5610077122787384218L;
 	
 	private List<GrantedAuthority> authorities;
-	private User user;
+	private transient User user;
 
 	public UserPrincipal(User user) {
 		this.user = user;
@@ -59,6 +59,10 @@ public class UserPrincipal implements UserDetails{
 	
 	public User getUser() {
 		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

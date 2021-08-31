@@ -27,16 +27,18 @@ public class UserServices implements UserDetailsService{
 		
 		return new UserPrincipal(user);
 	}
-
-	public User save(User user) {
-		managePassword(user);
+	
+	public User save(User user, boolean managePassword) {
+		if(managePassword) this.managePassword(user);
 		return userDao.save(user);
 	}
 
+	public User save(User user) {
+		return this.save(user, false);
+	}
+
 	private void managePassword(User user) {
-		if(user.getId() == null) {
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-		}
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 	}
 
 }

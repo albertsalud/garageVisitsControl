@@ -12,26 +12,28 @@
 	<h1>User form</h1>
 	<c:url value="/users/save" var="formURL" />
 	<form:form modelAttribute="userFormDTO" action="${formURL}" method="post">
-		<form:hidden path="id" />
 		<p>
 			Name:
 			<form:input path="name" />
+			<form:errors path="name" />
 		</p>
 		<p>
 			Surname:
 			<form:input path="surname" />
+			<form:errors path="surname" />
 		</p>
 		<p>
 			Email:
-			<form:input path="email" />
+			<form:input path="email" readonly="true" />
 		</p>
 		<p>
-			Password:
-			<form:input path="password" />
+			Change password:
+			<form:password path="password" />
+			<form:errors path="password" />
 		</p>
 		<p>
 			Repeat password:
-			<form:input path="repeatPassword" />
+			<form:password path="repeatPassword" />
 		</p>
 		<p>
 			<input type="submit" value="Save" />
