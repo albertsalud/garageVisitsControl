@@ -3,6 +3,7 @@ package com.albertsalud.garage.controllers.dto;
 import java.util.Arrays;
 import java.util.List;
 
+import com.albertsalud.garage.model.entities.Repair;
 import com.albertsalud.garage.model.entities.VehicleType;
 
 import lombok.Data;
@@ -15,5 +16,7 @@ public class VehicleFormDTO {
 	private String identificationNumber;
 	
 	private List<VehicleType> types = Arrays.asList(VehicleType.values());
+	
+	private List<Repair> repairs;
 	
 }

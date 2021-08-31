@@ -30,5 +30,19 @@
 			<input type="submit" value="Save" />
 		</p>
 	</form:form>
+	<c:if test="${not empty vehicleFormDTO.repairs}">
+		<table>
+			<tr>
+				<th>Repair date</th>
+				<th>Amount</th>
+			</tr>
+			<c:forEach items="${vehicleFormDTO.repairs}" var="curRepair">
+				<tr>
+					<td>${curRepair.repairDate}</td>
+					<td>${curRepair.amount}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</c:if>
 </body>
 </html>
