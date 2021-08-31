@@ -9,6 +9,7 @@
 <title>Repair form</title>
 </head>
 <body>
+	<jsp:include page="menu.jsp"></jsp:include>
 	<h1>Repair form</h1>
 	<p>
 		<a href="<c:url value="/repairs" />">&lt; back to repairs list</a>

@@ -45,10 +45,18 @@ public class VehicleController {
 		Vehicle vehicle = modelMapper.map(dto, Vehicle.class);
 		vehicle.setOwner(user.getUser());
 		
-		vehicleServices.save(vehicle);
+		if(isAuthorizedOperation(vehicle)) {
+			vehicleServices.save(vehicle);
+		}
 		return getVehicles(model, user);
 	}
 	
+	private boolean isAuthorizedOperation(Vehicle vehicle) {
+		return vehicle.getId() == null || 
+				vehicleServices.getVehicle(vehicle.getOwner(), vehicle.getId()) != null;
+		
+	}
+
 	@GetMapping(value = {"", "/"})
 	public String getVehicles(Model model,
 			@AuthenticationPrincipal UserPrincipal user) {

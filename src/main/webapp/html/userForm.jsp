@@ -9,6 +9,7 @@
 <title>User form</title>
 </head>
 <body>
+	<jsp:include page="menu.jsp"></jsp:include>
 	<h1>User form</h1>
 	<c:url value="/users/save" var="formURL" />
 	<form:form modelAttribute="userFormDTO" action="${formURL}" method="post">

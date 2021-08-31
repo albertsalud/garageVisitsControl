@@ -9,6 +9,7 @@
 <title>Vehicle form</title>
 </head>
 <body>
+	<jsp:include page="menu.jsp"></jsp:include>
 	<h1>Vehicle form</h1>
 	<p>
 		<a href="<c:url value="/vehicles" />">&lt; back to vehicles list</a>

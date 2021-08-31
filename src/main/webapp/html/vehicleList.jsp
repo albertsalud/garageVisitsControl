@@ -8,6 +8,7 @@
 <title>Vehicle list</title>
 </head>
 <body>
+	<jsp:include page="menu.jsp"></jsp:include>
 	<h1>Vehicles list</h1>
 	<table>
 		<tr>
