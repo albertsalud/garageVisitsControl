@@ -32,6 +32,12 @@ public class RepairController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@GetMapping(value = {"", "/"})
+	public String getRepairs(Model model,
+			@AuthenticationPrincipal UserPrincipal user) {
+		return "redirect:/vehicles";	// TODO: implement this
+	}
+	
 	@GetMapping("/new")
 	public String getNewRepair(Model model,
 			@AuthenticationPrincipal UserPrincipal user,
