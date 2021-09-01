@@ -7,6 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Repair form</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+<script>
+$( function() {
+	$( "#repairDate" ).datepicker({
+		dateFormat: "dd/mm/yy"
+	});
+} );
+</script>
 </head>
 <body>
 	<jsp:include page="menu.jsp"></jsp:include>
@@ -20,6 +32,7 @@
 		<p>
 			Date:
 			<form:input path="repairDate" />
+			<form:errors path="repairDate" />
 		</p>
 		<p>
 			Vehicle:
@@ -27,8 +40,19 @@
 			</form:select>
 		</p>
 		<p>
+			Vehicle kilometers:
+			<form:input path="vehicleKMs" />
+			<form:errors path="vehicleKMs" />
+		</p>
+		<p>
+			Garage:
+			<form:input path="garage" />
+			<form:errors path="garage" />
+		</p>
+		<p>
 			Amount:
 			<form:input path="amount" />
+			<form:errors path="amount" />
 		</p>
 		<p>
 			<input type="submit" value="Save" />

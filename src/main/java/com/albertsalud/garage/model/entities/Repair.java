@@ -37,4 +37,14 @@ public class Repair {
 	@ManyToOne
 	private Vehicle vehicle;
 	
+	private Long vehicleKMs;
+	
+	@Column(nullable = false)
+	private String garage;
+	
+	@Override
+	public String toString() {
+		return this.id + " - " + this.amount;
+	}
+	
 }

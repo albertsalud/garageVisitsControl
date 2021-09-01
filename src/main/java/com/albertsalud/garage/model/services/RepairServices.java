@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.albertsalud.garage.model.dao.RepairDAO;
 import com.albertsalud.garage.model.entities.Repair;
+import com.albertsalud.garage.model.entities.User;
 
 @Service
 public class RepairServices {
@@ -14,6 +15,10 @@ public class RepairServices {
 	
 	public Repair saveRepair(Repair repair) {
 		return repairDao.save(repair);
+	}
+
+	public Repair getRepair(Long id, User user) {
+		return repairDao.getByIdAndVehicleOwner(id, user);
 	}
 
 }
