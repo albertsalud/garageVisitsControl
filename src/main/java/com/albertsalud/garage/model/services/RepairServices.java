@@ -1,5 +1,7 @@
 package com.albertsalud.garage.model.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,10 @@ public class RepairServices {
 
 	public Repair getRepair(Long id, User user) {
 		return repairDao.getByIdAndVehicleOwner(id, user);
+	}
+
+	public List<Repair> findByVehicleOwner(User user) {
+		return repairDao.findByVehicleOwner(user);
 	}
 
 }

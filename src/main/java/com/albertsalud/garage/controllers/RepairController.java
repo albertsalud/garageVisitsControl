@@ -1,5 +1,7 @@
 package com.albertsalud.garage.controllers;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,7 +37,11 @@ public class RepairController {
 	@GetMapping(value = {"", "/"})
 	public String getRepairs(Model model,
 			@AuthenticationPrincipal UserPrincipal user) {
-		return "redirect:/vehicles";	// TODO: implement this
+		
+		List<Repair> repairs = repairServices.findByVehicleOwner(user.getUser());
+		model.addAttribute("repairs", repairs);
+		
+		return "repairList";
 	}
 	
 	@GetMapping("/new")
@@ -82,7 +88,7 @@ public class RepairController {
 		
 		repairServices.saveRepair(repairToSave);
 		
-		return "repairList";
+		return getRepairs(model, user);
 	}
 	
 	@GetMapping("{repairId}")
