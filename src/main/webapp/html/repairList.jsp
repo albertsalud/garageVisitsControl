@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<jsp:include page="commonHeader.jsp" />
 <title>Repairs list</title>
 </head>
 <body>
@@ -34,5 +34,6 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>

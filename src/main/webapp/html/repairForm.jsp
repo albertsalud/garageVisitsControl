@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<jsp:include page="commonHeader.jsp" />
 <title>Repair form</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -58,5 +58,6 @@ $( function() {
 			<input type="submit" value="Save" />
 		</p>
 	</form:form>
+	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<jsp:include page="commonHeader.jsp" />
 <title>User form</title>
 </head>
 <body>
@@ -40,5 +40,6 @@
 			<input type="submit" value="Save" />
 		</p>
 	</form:form>
+	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>

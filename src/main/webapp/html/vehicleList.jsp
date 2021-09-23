@@ -4,14 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<jsp:include page="commonHeader.jsp" />
 <title>Vehicle list</title>
 </head>
 <body>
 	<jsp:include page="menu.jsp"></jsp:include>
 	<h1>Vehicles list</h1>
 	<p><a href="<c:url value="/vehicles/new" />">&gt; Add new vehicle</a>
-	<table>
+	<table class="table">
 		<tr>
 			<th>Vehicle type</th>
 			<th>Id. Number</th>
@@ -29,5 +29,6 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>

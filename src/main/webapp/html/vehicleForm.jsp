@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<jsp:include page="commonHeader.jsp" />
 <title>Vehicle form</title>
 </head>
 <body>
@@ -44,5 +44,6 @@
 			</c:forEach>
 		</table>
 	</c:if>
+	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>
