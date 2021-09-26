@@ -10,40 +10,48 @@
 </head>
 <body>
 	<jsp:include page="menu.jsp"></jsp:include>
-	<h1>Vehicle form</h1>
-	<p>
-		<a href="<c:url value="/vehicles" />">&lt; back to vehicles list</a>
-	</p>
-	<c:url value="/vehicles/save" var="formURL" />
-	<form:form modelAttribute="vehicleFormDTO" action="${formURL}" method="post">
-		<form:hidden path="id" />
-		<p>
-			Vehicle type:
-			<form:select path="type" items="${vehicleFormDTO.types}">
-			</form:select>
-		</p>
-		<p>
-			Identification number:
-			<form:input path="identificationNumber" />
-		</p>
-		<p>
-			<input type="submit" value="Save" />
-		</p>
-	</form:form>
-	<c:if test="${not empty vehicleFormDTO.repairs}">
-		<table>
-			<tr>
-				<th>Repair date</th>
-				<th>Amount</th>
-			</tr>
-			<c:forEach items="${vehicleFormDTO.repairs}" var="curRepair">
-				<tr>
-					<td>${curRepair.repairDate}</td>
-					<td>${curRepair.amount}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</c:if>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>Vehicle form</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<c:url value="/vehicles/save" var="formURL" />
+				<form:form modelAttribute="vehicleFormDTO" action="${formURL}" method="post">
+					<form:hidden path="id" />
+					<div class="form-group">
+						<label for="type">Vehicle type:</label>
+						<form:select class="form-control" path="type" items="${vehicleFormDTO.types}" />
+					</div>
+					<div class="form-group">
+						<label for="identificationNumber">Identification number:</label>
+						<form:input class="form-control" path="identificationNumber" />
+					</div>
+					<button type="submit" class="btn">Save</button>
+				</form:form>
+			</div>
+		</div>
+		<c:if test="${not empty vehicleFormDTO.repairs}">
+			<div class="row">
+				<div class="col">
+					<table class="table">
+						<tr>
+							<th>Repair date</th>
+							<th>Amount</th>
+						</tr>
+						<c:forEach items="${vehicleFormDTO.repairs}" var="curRepair">
+							<tr>
+								<td>${curRepair.repairDate}</td>
+								<td>${curRepair.amount}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</div>
+		</c:if>
+	</div>
 	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>

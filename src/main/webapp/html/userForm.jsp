@@ -10,36 +10,45 @@
 </head>
 <body>
 	<jsp:include page="menu.jsp"></jsp:include>
-	<h1>User form</h1>
-	<c:url value="/users/save" var="formURL" />
-	<form:form modelAttribute="userFormDTO" action="${formURL}" method="post">
-		<p>
-			Name:
-			<form:input path="name" />
-			<form:errors path="name" />
-		</p>
-		<p>
-			Surname:
-			<form:input path="surname" />
-			<form:errors path="surname" />
-		</p>
-		<p>
-			Email:
-			<form:input path="email" readonly="true" />
-		</p>
-		<p>
-			Change password:
-			<form:password path="password" />
-			<form:errors path="password" />
-		</p>
-		<p>
-			Repeat password:
-			<form:password path="repeatPassword" />
-		</p>
-		<p>
-			<input type="submit" value="Save" />
-		</p>
-	</form:form>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>User form</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 col-md-6">
+				<c:url value="/users/save" var="formURL" />
+				<form:form modelAttribute="userFormDTO" action="${formURL}" method="post">
+					<div class="form-group">
+						<label for="name">Name:</label>
+						<form:input class="form-control" path="name" />
+						<form:errors path="name" />
+					</div>
+					<div class="form-group">
+						<label for="surname">Surname:</label>
+						<form:input class="form-control" path="surname" />
+						<form:errors path="surname" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<form:input class="form-control-plaintext" path="email" readonly="true"/>
+					</div>
+					<div class="form-group">
+						<label for="password">Change password:</label>
+						<form:input class="form-control" path="password" />
+						<form:errors path="password" />
+					</div>
+					<div class="form-group">
+						<label for="repeatPassword">Repeat password:</label>
+						<form:input class="form-control" path="repeatPassword" />
+						<form:errors path="repeatPassword" />
+					</div>
+					<button type="submit" class="btn">Save</button>
+				</form:form>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>
