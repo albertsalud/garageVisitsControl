@@ -68,6 +68,7 @@ public class UserController {
 	public String getUser(Model model,
 			@AuthenticationPrincipal UserPrincipal user) {
 		UserFormDTO dto = modelMapper.map(user.getUser(), UserFormDTO.class);
+		dto.setPassword(null);
 		return getUserForm(model, dto);
 	}
 

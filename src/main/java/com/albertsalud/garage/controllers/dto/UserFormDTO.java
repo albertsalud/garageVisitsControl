@@ -2,6 +2,7 @@ package com.albertsalud.garage.controllers.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.albertsalud.garage.controllers.dto.validators.PasswordDoubleCheck;
 
@@ -24,6 +25,7 @@ public class UserFormDTO {
 	@Email
 	private String email;
 	
+	@Size(min = 6, max = 10, message = "Password must contain between 6 and 10 characters.")
 	private String password;
 	private String repeatPassword;
 	

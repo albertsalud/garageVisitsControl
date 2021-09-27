@@ -23,12 +23,12 @@
 					<div class="form-group">
 						<label for="name">Name:</label>
 						<form:input class="form-control" path="name" />
-						<form:errors path="name" />
+						<form:errors path="name" cssClass="error"/>
 					</div>
 					<div class="form-group">
 						<label for="surname">Surname:</label>
 						<form:input class="form-control" path="surname" />
-						<form:errors path="surname" />
+						<form:errors path="surname" cssClass="error" />
 					</div>
 					<div class="form-group">
 						<label for="email">Email:</label>
@@ -36,13 +36,13 @@
 					</div>
 					<div class="form-group">
 						<label for="password">Change password:</label>
-						<form:input class="form-control" path="password" />
-						<form:errors path="password" />
+						<form:password class="form-control" path="password" />
+						<form:errors path="password" cssClass="error" />
 					</div>
 					<div class="form-group">
 						<label for="repeatPassword">Repeat password:</label>
-						<form:input class="form-control" path="repeatPassword" />
-						<form:errors path="repeatPassword" />
+						<form:password class="form-control" path="repeatPassword" />
+						<form:errors path="repeatPassword" cssClass="error" />
 					</div>
 					<button type="submit" class="btn">Save</button>
 				</form:form>
