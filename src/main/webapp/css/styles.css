@@ -1,4 +1,13 @@
-.btn {
+
+.btn, button.nav-link:not(.active){
 	background-color: #343a40;
 	color: white;
+}
+
+.tab-pane {
+	margin-top: 10px;
+}
+
+form{
+	margin-bottom: 30px;
 }

@@ -22,42 +22,47 @@ $( function() {
 </head>
 <body>
 	<jsp:include page="menu.jsp"></jsp:include>
-	<h1>Repair form</h1>
-	<p>
-		<a href="<c:url value="/repairs" />">&lt; back to repairs list</a>
-	</p>
-	<c:url value="/repairs/save" var="formURL" />
-	<form:form modelAttribute="repairFormDTO" action="${formURL}" method="post">
-		<form:hidden path="id" />
-		<p>
-			Date:
-			<form:input path="repairDate" />
-			<form:errors path="repairDate" />
-		</p>
-		<p>
-			Vehicle:
-			<form:select path="vehicle" items="${repairFormDTO.vehicles}" itemValue="id" itemLabel="identificationNumber">
-			</form:select>
-		</p>
-		<p>
-			Vehicle kilometers:
-			<form:input path="vehicleKMs" />
-			<form:errors path="vehicleKMs" />
-		</p>
-		<p>
-			Garage:
-			<form:input path="garage" />
-			<form:errors path="garage" />
-		</p>
-		<p>
-			Amount:
-			<form:input path="amount" />
-			<form:errors path="amount" />
-		</p>
-		<p>
-			<input type="submit" value="Save" />
-		</p>
-	</form:form>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>Repair form</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-lg-4 col-md-6">
+				<c:url value="/repairs/save" var="formURL" />
+				<form:form modelAttribute="repairFormDTO" action="${formURL}" method="post">
+					<form:hidden path="id" />
+					<div class="form-group">
+						<label for="repairDate">Date:</label>
+						<form:input class="form-control" path="repairDate" />
+						<form:errors path="repairDate" />
+					</div>
+					<div class="form-group">
+						<label for="vehicle">Vehicle:</label>
+						<form:select class="form-control" path="vehicle" items="${repairFormDTO.vehicles}" itemValue="id" itemLabel="identificationNumber">
+						</form:select>
+					</div>
+					<div class="form-group">
+						<label for="vehicleKMs">Vehicle kilometers:</label>
+						<form:input class="form-control" path="vehicleKMs" />
+						<form:errors path="vehicleKMs" />
+					</div>
+					<div class="form-group">
+						<label for="garage">Garage:</label>
+						<form:input class="form-control" path="garage" />
+						<form:errors path="garage" />
+					</div>
+					<div class="form-group">
+						<label for="amount">Amount:</label>
+						<form:input class="form-control" path="amount" />
+						<form:errors path="amount" />
+					</div>
+					<button type="submit" class="btn">Save</button>
+				</form:form>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="commonFooter.jsp" />
 </body>
 </html>

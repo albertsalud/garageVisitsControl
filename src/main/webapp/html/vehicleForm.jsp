@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col col-lg-4 col-md-6">
 				<c:url value="/vehicles/save" var="formURL" />
 				<form:form modelAttribute="vehicleFormDTO" action="${formURL}" method="post">
 					<form:hidden path="id" />
