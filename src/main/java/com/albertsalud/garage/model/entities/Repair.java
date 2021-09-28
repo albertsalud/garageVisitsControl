@@ -42,6 +42,8 @@ public class Repair {
 	@Column(nullable = false)
 	private String garage;
 	
+	private String billFileName;
+	
 	@Override
 	public String toString() {
 		return this.id + " - " + this.amount;

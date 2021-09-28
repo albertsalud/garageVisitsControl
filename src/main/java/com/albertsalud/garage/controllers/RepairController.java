@@ -1,7 +1,10 @@
 package com.albertsalud.garage.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,10 +23,13 @@ import com.albertsalud.garage.model.entities.Vehicle;
 import com.albertsalud.garage.model.services.RepairServices;
 import com.albertsalud.garage.model.services.VehicleServices;
 import com.albertsalud.garage.security.UserPrincipal;
+import com.albertsalud.garage.utils.FileUploadService;
 
 @Controller
 @RequestMapping("/repairs")
 public class RepairController {
+	
+	private static final String UPLOADED_IMAGES_FOLDER = "/uploaded/images"; 
 	
 	@Autowired
 	private VehicleServices vehicleServices;
@@ -33,6 +39,9 @@ public class RepairController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private FileUploadService fileUploadService;
 	
 	@GetMapping(value = {"", "/"})
 	public String getRepairs(Model model,
@@ -73,24 +82,52 @@ public class RepairController {
 			@AuthenticationPrincipal UserPrincipal user,
 			Model model) {
 		
-		Repair repairToSave = modelMapper.map(dto, Repair.class);
 		
-		if(!vehicleServices.getVehicles(user.getUser()).contains(repairToSave.getVehicle())) {
+		
+		if(!vehicleServices.getVehicles(user.getUser()).contains(dto.getVehicle())) {
 			model.addAttribute("message", "Invalid vehicle!");
 			return this.getRepairForm(model, user, dto);
 		}
 		
-		if(repairToSave.getId() != null && 
-				repairServices.getRepair(repairToSave.getId(), user.getUser()) ==  null) {
+		if(dto.getId() != null && 
+				repairServices.getRepair(dto.getId(), user.getUser()) ==  null) {
 			model.addAttribute("message", "Unauthorized action!");
 			return this.getRepairForm(model, user, dto);
 		}
 		
+		Repair repairToSave = getRepairFromDTO(dto, user); 
 		repairServices.saveRepair(repairToSave);
 		
 		return getRepairs(model, user);
 	}
 	
+	private Repair getRepairFromDTO(RepairFormDTO dto, UserPrincipal user) {
+		Repair repairToSave = modelMapper.map(dto, Repair.class);
+		Repair storedRepair = repairServices.getRepair(dto.getId(), user.getUser());
+		
+		if(Strings.isNotEmpty(dto.getBill().getOriginalFilename())) {
+			String managedFileName = manageUploadedFileName(dto.getBill().getOriginalFilename());
+			repairToSave.setBillFileName(managedFileName);
+			
+			if(storedRepair != null) fileUploadService.deleteFile(UPLOADED_IMAGES_FOLDER, storedRepair.getBillFileName());
+			fileUploadService.saveFile(UPLOADED_IMAGES_FOLDER, managedFileName, dto.getBill());
+		
+		} else {
+			repairToSave.setBillFileName("");
+			
+			if(storedRepair != null) {
+				repairToSave.setBillFileName(storedRepair.getBillFileName());
+			}
+		}
+		
+		return repairToSave;
+	}
+
+	private String manageUploadedFileName(String originalFilename) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmm_");
+		return sdf.format(new Date()) + originalFilename;
+	}
+
 	@GetMapping("{repairId}")
 	public String getVehicle(Model model,
 			@AuthenticationPrincipal UserPrincipal user,

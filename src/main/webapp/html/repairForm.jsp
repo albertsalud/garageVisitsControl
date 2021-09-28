@@ -31,7 +31,7 @@ $( function() {
 		<div class="row">
 			<div class="col col-lg-4 col-md-6">
 				<c:url value="/repairs/save" var="formURL" />
-				<form:form modelAttribute="repairFormDTO" action="${formURL}" method="post">
+				<form:form modelAttribute="repairFormDTO" action="${formURL}" method="post" enctype="multipart/form-data">
 					<form:hidden path="id" />
 					<div class="form-group">
 						<label for="repairDate">Date:</label>
@@ -57,6 +57,11 @@ $( function() {
 						<label for="amount">Amount:</label>
 						<form:input class="form-control" path="amount" />
 						<form:errors path="amount" />
+					</div>
+					<div class="form-group">
+						<label for="bill">Bill:</label>
+						<form:input type="file" class="form-control-file" path="bill" accept="image/png, image/jpeg"/>
+						<form:errors path="bill" />
 					</div>
 					<button type="submit" class="btn">Save</button>
 				</form:form>

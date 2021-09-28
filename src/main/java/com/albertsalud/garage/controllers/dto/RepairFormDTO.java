@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.albertsalud.garage.model.entities.Vehicle;
 
@@ -32,5 +33,6 @@ public class RepairFormDTO {
 	private String garage;
 	
 	private Long vehicleKMs;
-
+	
+	private  MultipartFile bill;
 }

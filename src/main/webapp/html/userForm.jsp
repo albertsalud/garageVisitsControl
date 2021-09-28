@@ -36,7 +36,7 @@
 					</div>
 					<div class="form-group">
 						<label for="password">Change password:</label>
-						<form:password class="form-control" path="password" />
+						<form:password class="form-control" path="password" autocomplete="nope" />
 						<form:errors path="password" cssClass="error" />
 					</div>
 					<div class="form-group">
