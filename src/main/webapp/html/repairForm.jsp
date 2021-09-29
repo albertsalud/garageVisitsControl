@@ -60,7 +60,7 @@ $( function() {
 					</div>
 					<div class="form-group">
 						<label for="bill">Bill:</label>
-						<form:input type="file" class="form-control-file" path="bill" accept="image/png, image/jpeg"/>
+						<form:input type="file" class="form-control-file" path="bill" accept="image/png, image/jpeg, application/pdf"/>
 						<form:errors path="bill" />
 					</div>
 					<button type="submit" class="btn">Save</button>

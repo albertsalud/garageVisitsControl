@@ -1,8 +1,13 @@
 package com.albertsalud.garage.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
@@ -23,7 +28,8 @@ import com.albertsalud.garage.model.entities.Vehicle;
 import com.albertsalud.garage.model.services.RepairServices;
 import com.albertsalud.garage.model.services.VehicleServices;
 import com.albertsalud.garage.security.UserPrincipal;
-import com.albertsalud.garage.utils.FileUploadService;
+import com.albertsalud.garage.utils.FTPServices;
+import com.albertsalud.garage.utils.FTPServices.FTPServicesResultBean;
 
 @Controller
 @RequestMapping("/repairs")
@@ -41,7 +47,7 @@ public class RepairController {
 	private ModelMapper modelMapper;
 	
 	@Autowired
-	private FileUploadService fileUploadService;
+	private FTPServices ftpService;
 	
 	@GetMapping(value = {"", "/"})
 	public String getRepairs(Model model,
@@ -109,8 +115,8 @@ public class RepairController {
 			String managedFileName = manageUploadedFileName(dto.getBill().getOriginalFilename());
 			repairToSave.setBillFileName(managedFileName);
 			
-			if(storedRepair != null) fileUploadService.deleteFile(UPLOADED_IMAGES_FOLDER, storedRepair.getBillFileName());
-			fileUploadService.saveFile(UPLOADED_IMAGES_FOLDER, managedFileName, dto.getBill());
+			if(storedRepair != null) ftpService.deleteFile(UPLOADED_IMAGES_FOLDER, storedRepair.getBillFileName());
+			ftpService.saveFile(UPLOADED_IMAGES_FOLDER, managedFileName, dto.getBill());
 		
 		} else {
 			repairToSave.setBillFileName("");
@@ -143,5 +149,48 @@ public class RepairController {
 		
 		return getRepairForm(model, user, dto);
 	}
+	
+	@GetMapping("{repairId}/bill")
+	public void getRepairBill(HttpServletResponse response,
+			@AuthenticationPrincipal UserPrincipal user,
+			@PathVariable Long repairId
+			) {
+		
+		Repair requestedRepair = repairServices.getRepair(repairId, user.getUser());
+		if(requestedRepair != null) {
+			setResponseAttributes(response, requestedRepair);
+			FTPServicesResultBean ftpServiceResult = ftpService.getFile(UPLOADED_IMAGES_FOLDER, requestedRepair.getBillFileName());
+			
+			if(ftpServiceResult.isOk()) {
+				try(InputStream ftpFile = ftpServiceResult.getInputStream();
+						OutputStream out = response.getOutputStream()) {
+					byte[] buffer = new byte[1024];
+				        
+				    int numBytesRead;
+				    while ((numBytesRead = ftpFile.read(buffer)) > 0) {
+				    	out.write(buffer, 0, numBytesRead);
+				    }
+				
+				} catch (IOException e) {
+					e.printStackTrace();
+				} 
+			}
+		}
+	}
 
+	private void setResponseAttributes(HttpServletResponse response, Repair requestedRepair) {
+		response.setContentType(getContentType(requestedRepair.getBillFileName()));
+        response.addHeader("Content-Disposition", "attachment; filename="+requestedRepair.getBillFileName());
+	}
+
+	private String getContentType(String billFileName) {
+		String fileType = billFileName.substring(billFileName.lastIndexOf("."));
+		
+		if(".pdf".equals(fileType)) return "application/pdf";
+		if(".jpeg".equals(fileType)) return "image/jpeg";
+		if(".jpg".equals(fileType)) return "image/jpeg";
+		if(".png".equals(fileType)) return "image/png";
+		
+		return "application/octet-stream";
+	}
 }

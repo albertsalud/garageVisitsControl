@@ -39,12 +39,21 @@
 					<table class="table">
 						<tr>
 							<th>Repair date</th>
+							<th>Garage</th>
 							<th>Amount</th>
+							<th>%nbsp;</th>
 						</tr>
 						<c:forEach items="${vehicleFormDTO.repairs}" var="curRepair">
 							<tr>
 								<td>${curRepair.repairDate}</td>
+								<td>${curRepair.garage}</td>
 								<td>${curRepair.amount}</td>
+								<td>
+									<c:if test="${not empty curRepair.billFileName}">
+										<a href="<c:url value="/repairs/${curRepair.id}/bill" />" >&gt; Bill</a>
+									</c:if>
+									&nbsp;
+								</td>
 							</tr>
 						</c:forEach>
 					</table>

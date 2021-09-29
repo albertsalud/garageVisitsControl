@@ -6,7 +6,7 @@ import java.io.InputStream;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
-public class FTPConnection implements FTPServices{
+public class FTPConnection implements FTPOperations{
 
 	private int port = 21;	// FTP standard port
 	
@@ -65,6 +65,24 @@ public class FTPConnection implements FTPServices{
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public InputStream getFile(String containingFolder, String fileName) {
+		System.out.println("Getting " + fileName + " from " + containingFolder + "... ");
+		
+		try {
+			manageWorkingDirectory(containingFolder);
+			InputStream is = ftpClient.retrieveFileStream(fileName);
+//			if(!ftpClient.completePendingCommand()) throw new IOException();
+			
+			return is;
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 }

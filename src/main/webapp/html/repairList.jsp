@@ -40,8 +40,13 @@
 							<td>${curRepair.garage}</td>
 							<td>${curRepair.vehicleKMs}</td>
 							<td>${curRepair.amount}</td>
+							<td>
+								<c:if test="${not empty curRepair.billFileName}">
+									<a href="<c:url value="/repairs/${curRepair.id}/bill" />" >&gt; Bill</a>
+								</c:if>
+								&nbsp;
+							</td>
 							<td><a href="<c:url value="/repairs/${curRepair.id}" />" >&gt; modify</a></td>
-							<td><a href="<c:url value="/repairs/new?vehicle=${curRepair.vehicle.id}" />" >&gt; add new repair</a></td>
 							<td><a href="<c:url value="/repairs/delete/${curRepair.id}" />" >&gt; delete</a></td>
 						</tr>
 					</c:forEach>

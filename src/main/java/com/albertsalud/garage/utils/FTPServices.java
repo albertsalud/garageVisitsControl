@@ -1,18 +1,19 @@
 package com.albertsalud.garage.utils;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.albertsalud.garage.utils.ftp.FTPConnection;
-import com.albertsalud.garage.utils.ftp.FTPServices;
+import com.albertsalud.garage.utils.ftp.FTPOperations;
 
 import lombok.Getter;
 
 @Component
-public class FileUploadService {
+public class FTPServices {
 	
 	@Value("${gvc.ftp.host}")
 	private String hostname;
@@ -25,8 +26,11 @@ public class FileUploadService {
 	
 	
 	@Getter
-	public class FileUploadServiceResult {
-		private FileUploadServiceResult(String destinationFolder, String destinationName, 
+	public class FTPServicesResultBean {
+		
+		private FTPServicesResultBean() {}
+		
+		private FTPServicesResultBean(String destinationFolder, String destinationName, 
 				MultipartFile file) {
 			
 			this.destinationFolder = destinationFolder;
@@ -39,16 +43,17 @@ public class FileUploadService {
 		private String errorMessage;
 		private MultipartFile file;
 		private boolean ok;
+		private InputStream inputStream;
 	}
 	
-	public FileUploadServiceResult saveFile(String destinationFolder, String destinationName, 
+	public FTPServicesResultBean saveFile(String destinationFolder, String destinationName, 
 			MultipartFile file) {
 		
-		FileUploadServiceResult result = new FileUploadServiceResult(destinationFolder, destinationName,
+		FTPServicesResultBean result = new FTPServicesResultBean(destinationFolder, destinationName,
 				file);
 		
 		try {
-			FTPServices ftp = new FTPConnection(hostname, username, password);
+			FTPOperations ftp = new FTPConnection(hostname, username, password);
 			result.ok = ftp.uploadFile(destinationFolder, destinationName, file.getInputStream());
 			
 			ftp.disconnect();
@@ -62,12 +67,12 @@ public class FileUploadService {
 		return result;
 	}
 
-	public FileUploadServiceResult deleteFile(String containingFolder, String fileName) {
-		FileUploadServiceResult result = new FileUploadServiceResult(containingFolder, fileName,
+	public FTPServicesResultBean deleteFile(String containingFolder, String fileName) {
+		FTPServicesResultBean result = new FTPServicesResultBean(containingFolder, fileName,
 				null);
 		
 		try {
-			FTPServices ftp = new FTPConnection(hostname, username, password);
+			FTPOperations ftp = new FTPConnection(hostname, username, password);
 			result.ok = ftp.deleteFile(containingFolder, fileName);
 			
 			ftp.disconnect();
@@ -80,6 +85,25 @@ public class FileUploadService {
 		
 		return result;
 		
+	}
+
+	public FTPServicesResultBean getFile(String containingFolder, String fileName) {
+		FTPServicesResultBean result = new FTPServicesResultBean();
+		
+		try {
+			FTPOperations ftp = new FTPConnection(hostname, username, password);
+			InputStream in = ftp.getFile(containingFolder, fileName);
+			ftp.disconnect();
+			
+			result.inputStream = in;
+			result.ok = true;
+			return result;
+		
+		} catch (IOException e) {
+			result.ok = false;
+			result.errorMessage = e.getMessage();
+		} 
+		return null;
 	}
 
 }
