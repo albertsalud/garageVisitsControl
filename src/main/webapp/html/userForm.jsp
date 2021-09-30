@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1>User form</h1>
+				<h3>User form</h3>
 			</div>
 		</div>
 		<div class="row">
@@ -36,7 +36,7 @@
 					</div>
 					<div class="form-group">
 						<label for="password">Change password:</label>
-						<form:password class="form-control" path="password" autocomplete="nope" />
+						<form:password class="form-control" path="password" autocomplete="off" />
 						<form:errors path="password" cssClass="error" />
 					</div>
 					<div class="form-group">

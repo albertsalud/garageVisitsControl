@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1>Vehicles list</h1>
+				<h3>Vehicles list</h3>
 			</div>
 		</div>
 		<div class="row">
@@ -27,16 +27,22 @@
 						<th>Vehicle type</th>
 						<th>Id. Number</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
 					</tr>
 					<c:forEach items="${vehicles}" var="curVehicle">
 						<tr>
 							<td>${curVehicle.type.description}</td>
 							<td>${curVehicle.identificationNumber}</td>
-							<td><a href="<c:url value="/vehicles/${curVehicle.id}" />" >&gt; modify</a></td>
-							<td><a href="<c:url value="/repairs/new?vehicle=${curVehicle.id}" />" >&gt; add new repair</a></td>
-							<td><a href="<c:url value="/vehicles/delete?vehicle=${curVehicle.id}" />" >&gt; delete</a></td>
+							<td>
+								<a class="btn" href="<c:url value="/vehicles/${curVehicle.id}" />" >
+									<img src="<c:url value="/images/edit.png" />" width="25px" height="25px" title="Edit vehicle data">
+								</a>
+								<a class="btn" href="<c:url value="/repairs/new?vehicle=${curVehicle.id}" />" >
+									<img src="<c:url value="/images/addRepair.png" />" width="25px" height="25px" title="Add new repair">
+								</a>
+								<a class="btn btn-danger" href="<c:url value="/vehicles/delete?vehicle=${curVehicle.id}" />" >
+									<img src="<c:url value="/images/trash_white.png" />" width="25px" height="25px" title="Delete vehicle">
+								</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>

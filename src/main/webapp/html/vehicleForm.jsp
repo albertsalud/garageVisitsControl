@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1>Vehicle form</h1>
+				<h3>Vehicle form</h3>
 			</div>
 		</div>
 		<div class="row">
@@ -41,7 +41,7 @@
 							<th>Repair date</th>
 							<th>Garage</th>
 							<th>Amount</th>
-							<th>%nbsp;</th>
+							<th>&nbsp;</th>
 						</tr>
 						<c:forEach items="${vehicleFormDTO.repairs}" var="curRepair">
 							<tr>
@@ -50,7 +50,9 @@
 								<td>${curRepair.amount}</td>
 								<td>
 									<c:if test="${not empty curRepair.billFileName}">
-										<a href="<c:url value="/repairs/${curRepair.id}/bill" />" >&gt; Bill</a>
+										<a class="btn" href="<c:url value="/repairs/${curRepair.id}/bill" />" >
+											<img src="<c:url value="/images/document.png" />" width="20px" height="25px" alt="Download bill">
+										</a>
 									</c:if>
 									&nbsp;
 								</td>

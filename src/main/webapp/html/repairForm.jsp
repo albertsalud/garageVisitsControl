@@ -25,7 +25,7 @@ $( function() {
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1>Repair form</h1>
+				<h3>Repair form</h3>
 			</div>
 		</div>
 		<div class="row">

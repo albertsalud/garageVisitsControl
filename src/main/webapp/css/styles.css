@@ -1,5 +1,5 @@
 
-.btn, button.nav-link:not(.active){
+.btn:not(.btn-danger), button.nav-link:not(.active){
 	background-color: #343a40;
 	color: white;
 }
@@ -10,4 +10,8 @@
 
 form{
 	margin-bottom: 30px;
+}
+
+.navbar-nav .nav-item{
+	margin: 0 10px 0 10px;
 }

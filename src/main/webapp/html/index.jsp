@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1>Welcome!</h1>
+				<h3>Welcome!</h3>
 			</div>
 		</div>
 		<div class="row">
