@@ -12,6 +12,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+<link href="<c:url value="/css/tagify.css" />" rel="stylesheet">
+<script src="<c:url value="/js/jQuery.tagify.min.js" />" type="text/javascript" ></script>
+
 <script>
 $( function() {
 	$( "#repairDate" ).datepicker({
@@ -59,6 +62,11 @@ $( function() {
 						<form:errors path="amount" />
 					</div>
 					<div class="form-group">
+						<label for="amount">Tags:</label>
+						<form:input class="form-control" path="tags" />
+						<form:errors path="tags" />
+					</div>
+					<div class="form-group">
 						<label for="bill">Bill:</label>
 						<form:input type="file" class="form-control-file" path="bill" accept="image/png, image/jpeg, application/pdf"/>
 						<form:errors path="bill" />
@@ -69,5 +77,14 @@ $( function() {
 		</div>
 	</div>
 	<jsp:include page="commonFooter.jsp" />
+	<script>
+	$("#tags").tagify();
+// 	{
+// 		whitelist: whiteList1,
+// 		dropdown: {
+// 			placeAbove:false
+// 		}
+// 	});
+	</script>
 </body>
 </html>

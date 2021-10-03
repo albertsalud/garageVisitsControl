@@ -44,6 +44,8 @@ public class Repair {
 	
 	private String billFileName;
 	
+	private String tags;
+	
 	@Override
 	public String toString() {
 		return this.id + " - " + this.amount;

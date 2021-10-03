@@ -35,4 +35,6 @@ public class RepairFormDTO {
 	private Long vehicleKMs;
 	
 	private  MultipartFile bill;
+	
+	private String tags;
 }

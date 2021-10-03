@@ -10,6 +10,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.util.Strings;
+import org.apache.tomcat.util.json.JSONParser;
+import org.apache.tomcat.util.json.ParseException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -88,8 +90,6 @@ public class RepairController {
 			@AuthenticationPrincipal UserPrincipal user,
 			Model model) {
 		
-		
-		
 		if(!vehicleServices.getVehicles(user.getUser()).contains(dto.getVehicle())) {
 			model.addAttribute("message", "Invalid vehicle!");
 			return this.getRepairForm(model, user, dto);
@@ -109,9 +109,40 @@ public class RepairController {
 	
 	private Repair getRepairFromDTO(RepairFormDTO dto, UserPrincipal user) {
 		Repair repairToSave = modelMapper.map(dto, Repair.class);
+		manageBill(dto, repairToSave, user);
+		manageTags(repairToSave, dto);
+		
+		return repairToSave;
+	}
+
+	private void manageTags(Repair repairToSave, RepairFormDTO dto) {
+		repairToSave.setTags("");
+		JSONParser parser = new JSONParser(dto.getTags());
+		
+		try {
+			parser.parseArray().forEach(tag -> {
+				System.out.println("Tag: " + tag);
+				String currentTag = tag.toString().replace("{value=", "").replace("}", "");
+				
+				String storedTags = repairToSave.getTags();
+				System.out.println("storedTags: " + storedTags);
+				if(!Strings.isEmpty(storedTags)) {
+					storedTags = storedTags.concat(",");
+				}
+				storedTags = storedTags.concat(currentTag);
+				repairToSave.setTags(storedTags);
+			});
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void manageBill(RepairFormDTO dto, Repair repairToSave, UserPrincipal user) {
 		Repair storedRepair = repairServices.getRepair(dto.getId(), user.getUser());
 		
-		if(Strings.isNotEmpty(dto.getBill().getOriginalFilename())) {
+		if(Strings.isNotEmpty(dto.getBill().getOriginalFilename())) {	// New file is setted
 			String managedFileName = manageUploadedFileName(dto.getBill().getOriginalFilename());
 			repairToSave.setBillFileName(managedFileName);
 			
@@ -125,8 +156,6 @@ public class RepairController {
 				repairToSave.setBillFileName(storedRepair.getBillFileName());
 			}
 		}
-		
-		return repairToSave;
 	}
 
 	private String manageUploadedFileName(String originalFilename) {
