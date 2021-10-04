@@ -27,4 +27,8 @@ public class VehicleServices {
 		return vehicleDao.findByOwnerAndId(user, vehicleId).orElse(null);
 	}
 
+	public void deleteVehicle(Vehicle requestedVehicle) {
+		vehicleDao.delete(requestedVehicle);
+	}
+
 }

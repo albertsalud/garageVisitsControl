@@ -222,4 +222,18 @@ public class RepairController {
 		
 		return "application/octet-stream";
 	}
+	
+	@GetMapping("/delete")
+	public String deleteRepair(Model model,
+			@AuthenticationPrincipal UserPrincipal user,
+			@RequestParam(name = "repair", required = true) Long repairId) {
+		
+		Repair requestedRepair = repairServices.getRepair(repairId, user.getUser());
+		if(requestedRepair == null) {
+			model.addAttribute("message", "Unauthorized action!");
+		} else {
+			repairServices.deleteRepair(requestedRepair);
+		}
+		return this.getRepairs(model, user);
+	}
 }

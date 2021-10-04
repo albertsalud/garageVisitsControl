@@ -6,6 +6,11 @@
 <head>
 <jsp:include page="commonHeader.jsp" />
 <title>Repairs list</title>
+<script type="text/javascript">
+function confirmDeleteRepair(repairId){
+	return confirm("Selected repair will be deleted. Continue?");
+}
+</script>
 </head>
 <body>
 	<jsp:include page="menu.jsp"></jsp:include>
@@ -15,6 +20,13 @@
 				<h3>Repairs list</h3>
 			</div>
 		</div>
+		<c:if test="${not empty message}">
+			<div class="row">
+				<div class="col">
+					<p class="bg-danger text-light">${message}</p>
+				</div>
+			</div>
+		</c:if>
 		<div class="row">
 			<div class="col">
 				<a href="<c:url value="/repairs/new" />">&gt; Add new repair</a>
@@ -47,7 +59,7 @@
 								<a class="btn" href="<c:url value="/repairs/${curRepair.id}" />" >
 									<img src="<c:url value="/images/edit.png" />" width="25px" height="25px" alt="Edit repair data">
 								</a>	
-								<a class="btn btn-danger" href="<c:url value="/repairs/delete?repair=${curVehicle.id}" />" >
+								<a class="btn btn-danger" href="<c:url value="/repairs/delete?repair=${curVehicle.id}" />"  onclick="return confirmDeleteRepair()">
 									<img src="<c:url value="/images/trash_white.png" />" width="25px" height="25px" alt="Delete repair">
 								</a>
 							</td>

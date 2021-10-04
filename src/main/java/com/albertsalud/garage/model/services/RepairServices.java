@@ -27,4 +27,9 @@ public class RepairServices {
 		return repairDao.findByVehicleOwner(user);
 	}
 
+	public void deleteRepair(Repair requestedRepair) {
+		repairDao.delete(requestedRepair);
+		
+	}
+
 }

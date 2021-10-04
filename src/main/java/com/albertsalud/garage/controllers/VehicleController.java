@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.albertsalud.garage.controllers.dto.VehicleFormDTO;
 import com.albertsalud.garage.model.entities.Vehicle;
@@ -77,6 +78,20 @@ public class VehicleController {
 		VehicleFormDTO dto = modelMapper.map(requestedVehicle, VehicleFormDTO.class);
 		
 		return getVehicleForm(model, dto);
+	}
+	
+	@GetMapping("/delete")
+	public String deleteVehicle(Model model,
+			@AuthenticationPrincipal UserPrincipal user,
+			@RequestParam(name = "vehicle", required = true) Long vehicleId) {
+		
+		Vehicle requestedVehicle = vehicleServices.getVehicle(user.getUser(), vehicleId);
+		if(requestedVehicle == null) {
+			model.addAttribute("message", "Unauthorized action!");
+		} else {
+			vehicleServices.deleteVehicle(requestedVehicle);
+		}
+		return this.getVehicles(model, user);
 	}
 
 }
