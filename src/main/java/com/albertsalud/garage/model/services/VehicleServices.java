@@ -15,6 +15,9 @@ public class VehicleServices {
 	@Autowired
 	private VehicleDAO vehicleDao;
 	
+	@Autowired
+	private RepairServices repairServices;
+	
 	public Vehicle save(Vehicle vehicle) {
 		return vehicleDao.save(vehicle);
 	}
@@ -29,6 +32,10 @@ public class VehicleServices {
 
 	public void deleteVehicle(Vehicle requestedVehicle) {
 		vehicleDao.delete(requestedVehicle);
+		
+		requestedVehicle.getRepairs().forEach(repair -> {
+			repairServices.deleteRepairBill(repair);
+		});
 	}
 
 }
