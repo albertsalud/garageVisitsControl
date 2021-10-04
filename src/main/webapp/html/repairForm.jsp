@@ -78,13 +78,15 @@ $( function() {
 	</div>
 	<jsp:include page="commonFooter.jsp" />
 	<script>
-	$("#tags").tagify();
-// 	{
-// 		whitelist: whiteList1,
-// 		dropdown: {
-// 			placeAbove:false
-// 		}
-// 	});
+	var whiteList1 = ${userTags};
+	
+	$("#tags").tagify(
+	{
+		whitelist: whiteList1,
+		dropdown: {
+			placeAbove:false
+		}
+	});
 	</script>
 </body>
 </html>

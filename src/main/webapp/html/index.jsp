@@ -17,6 +17,12 @@
 		</div>
 		<div class="row">
 			<div class="col">
+				<p>GVC is a usefull web application which allows you monitoring all your vehicles garage entries.<p>
+				<p>Register yourself for a free trial version.</p> 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
 				<ul class="nav nav-tabs" role="tablist">
 				  <li class="nav-item" role="presentation">
 				    <button id="log-in-tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#log-in" role="tab" aria-controls="log-in" aria-selected="true">Registered? Log in!</button>

@@ -28,6 +28,7 @@ import com.albertsalud.garage.controllers.dto.RepairFormDTO;
 import com.albertsalud.garage.model.entities.Repair;
 import com.albertsalud.garage.model.entities.Vehicle;
 import com.albertsalud.garage.model.services.RepairServices;
+import com.albertsalud.garage.model.services.TagServices;
 import com.albertsalud.garage.model.services.VehicleServices;
 import com.albertsalud.garage.security.UserPrincipal;
 import com.albertsalud.garage.utils.FTPServices;
@@ -50,6 +51,9 @@ public class RepairController {
 	
 	@Autowired
 	private FTPServices ftpService;
+	
+	@Autowired
+	private TagServices tagServices;
 	
 	@GetMapping(value = {"", "/"})
 	public String getRepairs(Model model,
@@ -81,7 +85,7 @@ public class RepairController {
 		
 		repairFormDTO.setVehicles(vehicleServices.getVehicles(user.getUser()));
 		model.addAttribute("repairFormDTO", repairFormDTO);
-		
+		model.addAttribute("userTags", tagServices.findByUser(user.getUser()));
 		return "repairForm";
 	}
 	
@@ -111,6 +115,7 @@ public class RepairController {
 		Repair repairToSave = modelMapper.map(dto, Repair.class);
 		manageBill(dto, repairToSave, user);
 		manageTags(repairToSave, dto);
+		tagServices.manageTags(user.getUser(), repairToSave.getTags());
 		
 		return repairToSave;
 	}
