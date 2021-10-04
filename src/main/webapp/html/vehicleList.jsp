@@ -33,7 +33,7 @@ function confirmDeleteVehicle(){
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col table-responsive">
 				<table class="table">
 					<tr>
 						<th>Vehicle type</th>
