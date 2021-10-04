@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,11 +46,15 @@ function confirmDeleteRepair(repairId){
 					</tr>
 					<c:forEach items="${repairs}" var="curRepair">
 						<tr>
-							<td>${curRepair.repairDate}</td>
+							<td><fmt:formatDate type = "time" value = "${curRepair.repairDate}" pattern = "dd/MM/yyyy"/></td>
 							<td>${curRepair.vehicle.identificationNumber}</td>
 							<td>${curRepair.garage}</td>
-							<td class="d-none d-lg-block d-xl-none">${curRepair.vehicleKMs}</td>
-							<td>${curRepair.amount} &euro;</td>
+							<td class="d-none d-lg-block d-xl-none">
+								<fmt:formatNumber type = "number" value = "${curRepair.vehicleKMs}" />
+							</td>
+							<td>
+								<fmt:formatNumber type = "number" minFractionDigits = "2" value = "${curRepair.amount}" /> &euro;
+							</td>
 							<td>
 								<c:if test="${not empty curRepair.billFileName}">
 									<a class="btn" href="<c:url value="/repairs/${curRepair.id}/bill" />" >

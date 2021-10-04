@@ -31,7 +31,7 @@ public class RepairServices {
 	}
 
 	public List<Repair> findByVehicleOwner(User user) {
-		return repairDao.findByVehicleOwner(user);
+		return repairDao.findByVehicleOwnerOrderByRepairDateDesc(user);
 	}
 
 	public void deleteRepair(Repair requestedRepair) {

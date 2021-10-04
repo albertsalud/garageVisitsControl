@@ -11,6 +11,6 @@ public interface RepairDAO extends JpaRepository<Repair, Long>{
 
 	Repair getByIdAndVehicleOwner(Long id, User owner);
 	
-	List<Repair> findByVehicleOwner(User owner);
+	List<Repair> findByVehicleOwnerOrderByRepairDateDesc(User owner);
 
 }
